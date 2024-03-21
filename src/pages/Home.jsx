@@ -1,3 +1,9 @@
+import HomeLayout from './../Layouts/HomeLayout';
+
 export default function Home() {
-  return <>Home</>;
+  return (
+    <HomeLayout>
+        Text
+    </HomeLayout>   
+  );
 }
