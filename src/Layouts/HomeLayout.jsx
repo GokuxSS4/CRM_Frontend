@@ -1,6 +1,7 @@
+import {useEffect} from 'react';
 import { BsFillMenuButtonWideFill } from "react-icons/bs";
 import { useDispatch,useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
 
 import { logout } from "../Redux/Slices/AuthSlice";
 
@@ -8,10 +9,20 @@ import { logout } from "../Redux/Slices/AuthSlice";
 function HomeLayout({ children }) {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigator = useNavigate();
 
   function onLogout(){
     dispatch(logout());
+    navigator("/login");
   }
+
+  useEffect(() => {
+    if (!auth.isLoggedIn){
+        navigator("/login");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
 
   return (
     <div className="min-h-[90vh]">
