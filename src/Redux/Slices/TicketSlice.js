@@ -5,6 +5,7 @@ import axiosInstance from "./../../Config/axiosInstance";
 
 const initialState = {
   ticketList: [],
+  dowloadedTickets: [],
   ticketDistribution: {
     open: 0,
     inProgress: 0,
@@ -35,13 +36,31 @@ export const getTickets = createAsyncThunk(
   }
 );
 
+const mappedStatus = {
+  open: "Open",
+  inProgress: "In Progress",
+  resolved: "Resolved",
+  onHold: "On Hold",
+  cancelled: "Cancelled",
+};
+
 const ticketSlice = createSlice({
   name: "tickets",
   initialState,
-  reducers: {},
+  reducers: {
+    filterTickets: (state, action) => {
+      state.ticketList = state.dowloadedTickets.filter((element) => {
+        return mappedStatus[element.status] == action.payload.status;
+      });
+    },
+    resetTicketList:(state)=>{
+      state.ticketList = state.dowloadedTickets;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getTickets.fulfilled, (state, action) => {
       if (!action?.payload?.data?.result) return;
+      state.dowloadedTickets = action.payload.data.result;
       state.ticketList = action.payload.data.result;
       state.ticketDistribution = {
         open: 0,
@@ -57,4 +76,6 @@ const ticketSlice = createSlice({
     });
   },
 });
+
+export const { filterTickets,resetTicketList } = ticketSlice.actions;
 export default ticketSlice.reducer;
