@@ -1,22 +1,13 @@
-import {useEffect} from 'react';
 import { BsFillPencilFill } from "react-icons/bs";
 import { MdCancel,MdOutlineDoneAll, MdPending } from 'react-icons/md';
 import { TbProgressBolt } from 'react-icons/tb';
-import { useDispatch,useSelector } from "react-redux";
 
 import Card from "../Components/Card";
-import { getTickets } from '../Redux/Slices/TicketSlice';
+import useTickets from '../Hooks/useTIckets';
 import HomeLayout from "./../Layouts/HomeLayout";
 
 export default function Home() {
-  const authState = useSelector((state) => state.auth);
-  const ticketState = useSelector((state) => state.tickets);
-  const dispatch = useDispatch();
-
-  useEffect(()=>{
-    dispatch(getTickets());
-  },[authState.token]);
-
+  const ticketState = useTickets();
   return (
     <HomeLayout>
                  <div className='mt-10 flex flex-row justify-center items-center gap-5 flex-wrap'>
