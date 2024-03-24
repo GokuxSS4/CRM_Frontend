@@ -1,12 +1,17 @@
+import { Line,Pie } from 'react-chartjs-2';
 import { BsFillPencilFill } from "react-icons/bs";
 import { MdCancel,MdOutlineDoneAll, MdPending } from 'react-icons/md';
 import { TbProgressBolt } from 'react-icons/tb';
 
 import Card from "../Components/Card";
+import useCharts from '../Hooks/useCharts';
 import useTickets from '../Hooks/useTickets';
 import HomeLayout from "./../Layouts/HomeLayout";
+
 export default function Home() {
   const ticketState = useTickets();
+
+  const [pieChartData,lineChartData] = useCharts();
 
   return (
     <HomeLayout>
@@ -66,6 +71,19 @@ export default function Home() {
                 >
                     <MdCancel className='inline mr-2' />
                 </Card>
+            </div>
+
+            <div className="mt-10 flex justify-center items-center gap-10">
+                <div className="w-80 h-80 ">
+                    <Pie data={pieChartData}/>
+                </div>
+                
+            </div>
+            <div className="mt-10 mb-10 flex justify-center items-center gap-10">
+
+                <div className="w-[50rem] bg-[wheat]">
+                    <Line data={lineChartData}/>
+                </div>
             </div>
     </HomeLayout>
   );
