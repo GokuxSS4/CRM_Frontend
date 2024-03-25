@@ -33,7 +33,7 @@ function Card({
           className={`radial-progress ${fontColor}`}
           style={{ "--value": status*100 }}
         >
-          {status*100}%
+          {(status*100).toString().substr(0,5)}%
         </div>
       </div>
     </div>

@@ -50,41 +50,26 @@ function HomeLayout({ children }) {
 
             {auth.role === "admin" && <li><Link to="/users">All Users</Link></li>}
 
-            <li className="absolute bottom-8 w-1/2">
-              <div className="w-full flex justify-center items-center">
-                {auth.isLoggedIn ? (
-                  <>
-                    <button
-                      onClick={onLogout}
-                      className="btn btn-primary px-2 py-1 rounded-md font-semibold w-full"
-                    >
-                      Logout
-                    </button>
-                    <Link
-                      to="/profile"
-                      className="btn btn-secondary px-2 py-1 rounded-md font-semibold w-full"
-                    >
-                      Profile
-                    </Link>
-                  </>
-                ) : (
-                  <>
-                    <Link
-                      to="/login"
-                      className="btn btn-primary px-2 py-1 rounded-md font-semibold w-full"
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      to="/signup"
-                      className="btn btn-secondary px-2 py-1 rounded-md font-semibold w-full"
-                    >
-                      Signup
-                    </Link>
-                  </>
-                )}
-              </div>
-            </li>
+            <li className='absolute bottom-8 w-3/4'>
+                            <div className='w-full flex justify-center items-center'>
+                                {
+                                    !auth.isLoggedIn ? (
+                                        <>  
+
+                                            <Link to="/login" className='btn btn-primary text-center px-2 py-1 rounded-md font-semibold w-1/2'>Login</Link>
+                                            <Link to="/signup" className='btn btn-secondary text-center px-2 py-1 rounded-md font-semibold w-1/2'>Signup</Link>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button onClick={onLogout} className='btn btn-primary px-2 py-1 rounded-md font-semibold w-1/2'>Logout</button>
+                                            <Link className='btn btn-secondary px-2 py-1 rounded-md font-semibold w-1/2 text-center'>Profile</Link>
+                                        </>
+                                    )
+                                }
+
+                                
+                            </div>
+                        </li>
           </ul>
         </div>
       </div>

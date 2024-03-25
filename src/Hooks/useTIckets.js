@@ -4,9 +4,9 @@ import { useSearchParams } from "react-router-dom";
 
 import {
   filterTickets,
-  getTickets,
-  resetTicketList,
-} from "../Redux/Slices/TicketSlice";
+  getMyAssignedTickets,
+  getMyCreatedTickets,
+  resetTicketList} from "../Redux/Slices/TicketSlice";
 
 export default function useTickets() {
   const authState = useSelector((state) => state.auth);
@@ -17,7 +17,12 @@ export default function useTickets() {
 
   function handleTickets() {
     if (ticketState.dowloadedTickets.length == 0) {
-      dispatch(getTickets());
+      if (authState.role == 'customer'){
+        dispatch(getMyCreatedTickets());
+      }
+      else{
+        dispatch(getMyAssignedTickets());
+      }
     }
     if (status) {
       dispatch(filterTickets({ status: status }));

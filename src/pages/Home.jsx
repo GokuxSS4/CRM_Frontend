@@ -100,10 +100,11 @@ export default function Home() {
       </div>
 
       <div className="mt-10 mb-10 flex justify-center items-center gap-10">
-        <div className="w-[50rem] bg-[wheat]">
-          <Bar data={barChartData} />
-        </div>
-      </div>
+
+<div className="w-[50rem] bg-[wheat]">
+    <Bar data={barChartData}/>
+</div>
+</div>
     </HomeLayout>
   );
 }
