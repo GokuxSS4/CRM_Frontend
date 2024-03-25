@@ -1,16 +1,19 @@
-import { useRef } from "react";
+
+import { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { AiOutlineDownload } from "react-icons/ai";
-import generatePDF from 'react-to-pdf';
+import { usePDF } from "react-to-pdf";
 
+import TicketDetailsModal from '../Components/TicketModal';
 import useTickets from "../Hooks/useTickets";
 import HomeLayout from "../Layouts/HomeLayout";
-
 const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
+function Dashboard() {
 
-export default function Dashboard(){
     const ticketState = useTickets();
-    const targetRef = useRef();
+    const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
+
+    const [selectedTicket, setSelectedTicket] = useState({});
 
     const columns = [
         {
@@ -49,10 +52,10 @@ export default function Dashboard(){
             selector: row => row.status,
             reorder: true,
             sortable: true,
-    
+
         }
     ];
-    
+
     const customStyles = {
         rows: {
             style: {
@@ -73,20 +76,22 @@ export default function Dashboard(){
             },
         },
     };
-    
-    return (
-        <>
-         <HomeLayout>
-             <div className="min-h-[90vh] flex flex-col items-center justify-center gap-2">
 
+    return (
+        <HomeLayout>
+            <div className="min-h-[90vh] flex flex-col items-center justify-center gap-2">
+                
                 <div className="bg-yellow-500 w-full text-black text-center text-3xl py-4 font-bold hover:bg-yellow-400 transition-all ease-in-out duration-300">
-                    Tickets Records
-                    <AiOutlineDownload className="cursor-pointer inline " onClick={() => generatePDF(targetRef, {filename: 'page.pdf'})} />
+                    Tickets Records <AiOutlineDownload className="cursor-pointer inline " onClick={() => toPDF()} />
                 </div>
 
                 <div ref={targetRef}>
                     {ticketState && 
                         <DataTable
+                            onRowClicked={(row) => {
+                                setSelectedTicket(row);
+                                document.getElementById('ticket_modal').showModal();
+                            }}
                             columns={columns}
                             data={ticketState.ticketList}
                             expandableRows
@@ -94,9 +99,11 @@ export default function Dashboard(){
                             customStyles={customStyles}
                         />
                     }
+                    <TicketDetailsModal ticketDetail={selectedTicket} key={selectedTicket._id}/>
                 </div>
             </div>  
-         </HomeLayout>
-        </>
+        </HomeLayout>
     );
 }
+
+export default Dashboard;

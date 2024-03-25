@@ -47,19 +47,19 @@ function HomeLayout({ children }) {
 
             {auth.role === "admin" && <li><Link to="/users">All Users</Link></li>}
 
-            <li className="absolute bottom-8 w-3/4">
+            <li className="absolute bottom-8 w-1/2">
               <div className="w-full flex justify-center items-center">
                 {auth.isLoggedIn ? (
                   <>
                     <button
                       onClick={onLogout}
-                      className="btn-primary px-2 py-1 rounded-md font-semibold w-full"
+                      className="btn btn-primary px-2 py-1 rounded-md font-semibold w-full"
                     >
                       Logout
                     </button>
                     <Link
                       to="/profile"
-                      className="btn-secondary px-2 py-1 rounded-md font-semibold w-full"
+                      className="btn btn-secondary px-2 py-1 rounded-md font-semibold w-full"
                     >
                       Profile
                     </Link>
@@ -68,13 +68,13 @@ function HomeLayout({ children }) {
                   <>
                     <Link
                       to="/login"
-                      className="btn-primary px-2 py-1 rounded-md font-semibold w-full"
+                      className="btn btn-primary px-2 py-1 rounded-md font-semibold w-full"
                     >
                       Login
                     </Link>
                     <Link
                       to="/signup"
-                      className="btn-secondary px-2 py-1 rounded-md font-semibold w-full"
+                      className="btn btn-secondary px-2 py-1 rounded-md font-semibold w-full"
                     >
                       Signup
                     </Link>

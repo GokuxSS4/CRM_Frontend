@@ -36,6 +36,28 @@ export const getTickets = createAsyncThunk(
   }
 );
 
+export const updateTicket = createAsyncThunk('tickets/updateTicket', async (ticket) => {
+  try {
+      const response = axiosInstance.patch(`ticket/${ticket._id}`, 
+      ticket, // req body
+      {
+          headers: {
+              'x-access-token': localStorage.getItem('token')
+          }
+      });
+      toast.promise(response, {
+          success: 'Successfully updated the ticket',
+          loading: 'Updating the ticket',
+          error: 'Something went wrong'
+      });
+      return await response;
+
+  } catch(error) {
+      console.log(error);
+
+  }
+})
+
 const mappedStatus = {
   open: "Open",
   inProgress: "In Progress",
@@ -73,7 +95,28 @@ const ticketSlice = createSlice({
         state.ticketDistribution[ticket.status] =
           state.ticketDistribution[ticket.status] + 1;
       });
-    });
+    }).addCase(updateTicket.fulfilled, (state, action) => {
+      const updatedTicket = action.payload.data.result;
+      state.ticketList = state.ticketList.map((ticket) => {
+          if(ticket._id == updatedTicket._id) return updatedTicket;
+          return ticket;
+      });
+      state.dowloadedTickets = state.dowloadedTickets.map((ticket) => {
+          if(ticket._id == updatedTicket._id) return updatedTicket;
+          return ticket;
+      });
+      state.ticketDistribution =  {
+          open: 0,
+          inProgress: 0,
+          resolved: 0,
+          onHold: 0,
+          cancelled: 0
+      };
+      state.dowloadedTickets.forEach(ticket => {
+          state.ticketDistribution[ticket.status] = state.ticketDistribution[ticket.status] + 1;
+      });
+  });
+    
   },
 });
 
