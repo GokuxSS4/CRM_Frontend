@@ -1,5 +1,6 @@
 import { Route,Routes } from "react-router-dom";
 
+import CreateTicket from "../Pages/CreateTicket";
 import Dashboard from "../Pages/Dashboard";
 import Home from "../Pages/Home";
 import Login from '../Pages/Login';
@@ -18,6 +19,7 @@ export default function MainRoutes(){
                 <Route path="/users" element={<UserList/>} />
             </Route>
 
+            <Route path="/ticket/create" element={<CreateTicket/>}/>
 
         </Routes>
     );

@@ -44,6 +44,9 @@ function HomeLayout({ children }) {
             <li>
               <Link to="/dashboard">Dashboard</Link>
             </li>
+            <li>
+              <Link to="/ticket/create">Create Ticket</Link>
+            </li>
 
             {auth.role === "admin" && <li><Link to="/users">All Users</Link></li>}
 
